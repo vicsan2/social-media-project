@@ -113,5 +113,15 @@
         ]
       }
     }
-  ]
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "."
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
+  }
 }

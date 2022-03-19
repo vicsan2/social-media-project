@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import axios, { AxiosError } from "axios"
 import * as React from "react"
 import {
@@ -39,9 +40,17 @@ export function Likes({ id }) {
         superSelected[otherLike] = !superSelected[otherLike]
       }
       setSelectedLike(superSelected)
-      return axios.post(`${apiUrl}/likes/${id}`, {
-        text: JSON.stringify([newLikeSelected, newSelected]),
-      })
+      return axios.post(
+        `${apiUrl}/likes/${id}`,
+        {
+          text: JSON.stringify([newLikeSelected, newSelected]),
+        },
+        {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        }
+      )
       // const xhr = new XMLHttpRequest()
       // xhr.open(`POST`, `${apiUrl}/likes/${id}`)
       // xhr.setRequestHeader(`content-type`, `application/json`)
