@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import axios, { AxiosError } from "axios"
 import * as React from "react"
 import {

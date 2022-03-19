@@ -16,50 +16,10 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
-  "plugins": ["react", "react-hooks", "jsx-a11y", "prettier", "jest"],
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb",
-    "prettier",
-    "plugin:jest/recommended",
-    "plugin:jest/style"
-  ],
+  "plugins": ["react-hooks", "jsx-a11y", "prettier"],
+  "extends": ["prettier"],
   "rules": {
-    "jest/prefer-strict-equal": "error",
-    "jest/prefer-to-have-length": "warn",
-    "prettier/prettier": "error",
-    "import/prefer-default-export": "off",
-    "react/prop-types": "off",
-    "react/jsx-filename-extension": "off",
-    "react/jsx-props-no-spreading": "off",
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "**/*.test.[jt]s",
-          "**/*.spec.[jt]s",
-          "**/*.test.[jt]sx",
-          "**/*.spec.[jt]sx",
-          ".storybook/*"
-        ]
-      }
-    ],
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "ts": "never",
-        "tsx": "never",
-        "js": "never",
-        "jsx": "never"
-      }
-    ],
-    "react/function-component-definition": [
-      2,
-      {
-        "namedComponents": "function-declaration"
-      }
-    ]
+    "prettier/prettier": "error"
   },
   "overrides": [
     {
@@ -80,21 +40,6 @@
         "@typescript-eslint/no-var-requires": "off",
         "no-use-before-define": [0],
         "@typescript-eslint/no-use-before-define": [1],
-        "import/no-unresolved": 0,
-        "import/no-extraneous-dependencies": [
-          "error",
-          {
-            "devDependencies": [
-              "**/*.test.ts",
-              "**/*.spec.ts",
-              "**/*.test.tsx",
-              "**/*.spec.tsx",
-              "**/*.stories.ts",
-              "**/*.stories.tsx",
-              ".storybook/*"
-            ]
-          }
-        ],
         "quotes": "off",
         "@typescript-eslint/quotes": [
           2,
@@ -111,15 +56,5 @@
         ]
       }
     }
-  ],
-  "settings": {
-    "import/resolver": {
-      "typescript": {
-        "project": "."
-      }
-    },
-    "react": {
-      "version": "detect"
-    }
-  }
+  ]
 }
