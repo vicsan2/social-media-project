@@ -24,15 +24,11 @@ function AddPost() {
   const postMutation: UseMutationResult<PostData, AxiosError, PostData> =
     useMutation<PostData, AxiosError, PostData>(
       async (newPost: PostData) =>
-        axios.post(
-          `${apiUrl}/posts`,
-          { text: JSON.stringify(newPost) },
-          {
-            headers: {
-              "Content-Type": `application/json`,
-            },
-          }
-        ),
+        axios.post(`${apiUrl}/posts`, JSON.stringify(newPost), {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        }),
       // const xhr = new XMLHttpRequest();
       // xhr.open("POST", `${apiUrl}/posts`);
       // xhr.setRequestHeader("content-type", "application/json");

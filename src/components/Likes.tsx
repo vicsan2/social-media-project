@@ -42,9 +42,7 @@ export function Likes({ id }) {
       setSelectedLike(superSelected)
       return axios.post(
         `${apiUrl}/likes/${id}`,
-        {
-          text: JSON.stringify([newLikeSelected, newSelected]),
-        },
+        JSON.stringify([newLikeSelected, newSelected]),
         {
           headers: {
             "Content-Type": `application/json`,

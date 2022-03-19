@@ -29,17 +29,11 @@ function CommentForm({ id }) {
     CommentData
   > = useMutation<CommentData, AxiosError, CommentData>(
     async (newComment: CommentData) =>
-      axios.post(
-        `${apiUrl}/comments/${id}`,
-        {
-          text: JSON.stringify(newComment),
+      axios.post(`${apiUrl}/comments/${id}`, JSON.stringify(newComment), {
+        headers: {
+          "Content-Type": `application/json`,
         },
-        {
-          headers: {
-            "Content-Type": `application/json`,
-          },
-        }
-      ),
+      }),
     // const xhr = new XMLHttpRequest()
     // xhr.open(`POST`, `${apiUrl}/comments/${id}`)
     // xhr.setRequestHeader(`content-type`, `application/json`)
