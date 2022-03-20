@@ -1,5 +1,4 @@
 import * as React from "react"
-import * as Yup from "yup"
 import {
   useQuery,
   useMutation,
@@ -10,14 +9,10 @@ import { Formik, Form, Field } from "formik"
 import axios, { AxiosError } from "axios"
 import Comment from "./Comment"
 import { apiUrl } from "../constants"
+import { commentSchema } from "../schemas/misc"
+import CircularProgress from "../atoms/CircularProgress"
+import Box from "../atoms/Box"
 
-const commentSchema = Yup.object().shape({
-  userName: Yup.string().max(15, `Too Long!`).notRequired(),
-  comment: Yup.string()
-    .min(1, `Too Short!`)
-    .max(250, `Too Long!`)
-    .required(`Required`),
-})
 // Requst adding of new comment to the kv namespace.
 // If successful, display comment to user before refreshing
 // all comments on this post ID
@@ -106,18 +101,33 @@ function CommentForm({ id }) {
   )
 }
 
-const Message = React.memo(({ value }: any) => (
-  <div
-    style={{
-      marginTop: 10,
-      borderBottom: `1px solid black`,
-      paddingBottom: 10,
-      textAlign: `center`,
-    }}
-  >
-    {value}
-  </div>
-))
+interface MessageProps {
+  message: string
+}
+
+function Message({ message }: MessageProps) {
+  return (
+    <Box
+      sx={{
+        marginTop: 10,
+        borderBottom: `1px solid black`,
+        paddingBottom: 10,
+        textAlign: `center`,
+        display: `flex`,
+      }}
+    >
+      {message}
+    </Box>
+  )
+}
+
+function LoadingMessage() {
+  return (
+    <Box>
+      <CircularProgress />
+    </Box>
+  )
+}
 
 export default function Comments({ id }) {
   const { isLoading, data, error } = useQuery(`getComments/${id}`, () =>
@@ -129,16 +139,16 @@ export default function Comments({ id }) {
       }))
   )
 
-  if (isLoading) return <Message value="Loading..." />
+  if (isLoading) return <LoadingMessage />
 
-  if (error) return <Message value={`An error has occurred: ${error}`} />
+  if (error) return <Message message={`An error has occurred: ${error}`} />
 
   return (
-    <>
+    <Box>
       {data?.allComments?.map((commentData) => (
         <Comment key={commentData.comment} data={commentData} />
       ))}
       <CommentForm id={id} />
-    </>
+    </Box>
   )
 }

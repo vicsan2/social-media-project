@@ -5,36 +5,22 @@ import Comments from "./Comments"
 import { Likes } from "./Likes"
 import { imageDecorator } from "./helper"
 
+import PostWrapper from "../molecules/PostWrapper"
+import Typography from "../atoms/Typography"
+import Button from "../atoms/Button"
+
 // Each post receives a title, username, the content, and an id from our query to display
-export default function Post(
-  { data } = {
-    data: {
-      title: ``,
-      userName: ``,
-      content: ``,
-      id: ``,
-    },
-  }
-) {
+export default function Post({ title, userName, content, id }: PostData) {
   // assigning variables from function and post context
   const { handleCommentClick, showComments } = usePost()
-  const { title, userName, content, id } = data
 
   return (
-    <div
-      style={{
-        borderRadius: 15,
-        maxWidth: 320,
-        margin: `10px auto`,
-        border: `2px solid pink`,
-        padding: 10,
-        overflow: `auto`,
-        overflowWrap: `break-word`,
-      }}
-    >
-      <p style={{ fontWeight: `bold` }}>{userName}</p>
+    <PostWrapper>
+      <Typography fontWeight="bold">{userName}</Typography>
       <div style={{ marginBottom: 10, textDecoration: `underline` }}>
-        <p style={{ fontWeight: 700, textAlign: `center` }}>{title}</p>
+        <Typography fontWeight={700} sx={{ textAlign: `center` }}>
+          {title}
+        </Typography>
       </div>
       {/* ReactTextFormat formats the text based on it's contents. I only want URLs and Images to be formatted */}
       <ReactTextFormat
@@ -70,9 +56,9 @@ export default function Post(
           }}
         >
           {/* Button displays comments on request */}
-          <button type="button" onClick={handleCommentClick}>
+          <Button variant="outlined" onClick={handleCommentClick}>
             Comments
-          </button>
+          </Button>
         </div>
         <div
           style={{
@@ -88,7 +74,9 @@ export default function Post(
           <Likes id={id} />
         </div>
       </div>
-      <div>{showComments && <Comments id={id} />}</div>
-    </div>
+      <div style={{ width: `100%` }}>
+        {showComments && <Comments id={id} />}
+      </div>
+    </PostWrapper>
   )
 }

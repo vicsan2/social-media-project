@@ -1,13 +1,15 @@
 import * as React from "react"
 import { useQuery } from "react-query"
-import Post from "../components/Post"
-import DefaultPost from "../components/DefaultPost"
-import AddPost from "../components/AddPost"
+import { motion } from "framer-motion"
+import Post from "../organisms/Post"
+import DefaultPost from "../organisms/DefaultPost"
+import AddPost from "../organisms/AddPost"
 import { apiUrl } from "../constants"
 import { PostProvider } from "../contexts/Post"
+import Box from "../atoms/Box"
 
 // Get all posts from worker and see organize them correctly. If there are no posts, create a default post that states so.
-function Posts() {
+export default function Posts() {
   const { isLoading, data, error } = useQuery(`getPosts`, () =>
     fetch(`${apiUrl}/posts`)
       .then((res) => res.json())
@@ -16,23 +18,26 @@ function Posts() {
         ...allData,
       }))
   )
+  const posts = data?.allPosts?.slice(0, 5)
 
   if (isLoading) return <DefaultPost message="Loading..." />
 
   if (error) return <DefaultPost message={`An error has occurred: ${error}`} />
 
   return (
-    <>
-      <AddPost />
-      {/* AddPost always returned, then if there are no posts, return default. Otherwise display each post */}
-      {!data?.allPosts?.length && <DefaultPost message={data?.message} />}
-      {data?.allPosts?.map((postData) => (
+    <Box sx={{ maxWidth: 640, margin: `10px auto` }}>
+      <motion.div layout>
+        <AddPost />
+      </motion.div>
+      {/* AddPost always displays, then if there are no posts, return default. Otherwise display each post */}
+      {!posts?.length && <DefaultPost message={data?.message} />}
+      {posts?.map((postData) => (
         <PostProvider>
-          <Post key={postData.id} data={postData} />
+          <motion.div layout>
+            <Post key={postData.id} {...postData} />
+          </motion.div>
         </PostProvider>
       ))}
-    </>
+    </Box>
   )
 }
-
-export default Posts

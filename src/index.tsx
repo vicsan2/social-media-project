@@ -1,4 +1,6 @@
 import * as React from "react"
+import { ThemeProvider } from "@emotion/react"
+import { CssBaseline } from "@mui/material"
 import ReactDOM from "react-dom"
 import { BrowserRouter } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from "react-query"
@@ -7,15 +9,20 @@ import Routes from "./Routes"
 import reportWebVitals from "./reportWebVitals"
 
 import "./index.css"
+import theme from "./theme"
 
 const queryClient = new QueryClient()
 
 ReactDOM.render(
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
-  </QueryClientProvider>,
+  <ThemeProvider theme={theme}>
+    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+    <CssBaseline />
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </QueryClientProvider>
+  </ThemeProvider>,
   document.getElementById(`root`)
 )
 
