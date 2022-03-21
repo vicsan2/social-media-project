@@ -1,11 +1,11 @@
 import * as React from "react"
 import { Routes as ReactRouter, Route } from "react-router-dom"
-import Posts from "./pages/Posts"
+import Index from "./pages/Index"
 
 function Routes() {
   return (
     <ReactRouter>
-      <Route path="/" element={<Posts />} />
+      <Route path="/" element={<Index />} />
     </ReactRouter>
   )
 }

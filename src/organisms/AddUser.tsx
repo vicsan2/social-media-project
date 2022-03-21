@@ -15,7 +15,9 @@ function QueryMutation(): UseMutationResult<UserData, AxiosError, UserData> {
       axios.post(`${apiUrl}/users`, JSON.stringify(newUser.user), {
         headers: {
           "Content-Type": `application/json`,
+          "Access-Control-Expose-Headers": `Set-Cookie`,
         },
+        withCredentials: true,
       }),
     {
       // onMutate: async (newPost: PostData) => {

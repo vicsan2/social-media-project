@@ -10,7 +10,6 @@ interface AllPosts {
 }
 
 interface CommentData {
-  userName: string
   comment: string
 }
 
