@@ -65,12 +65,14 @@ export default function AddPostForm({
   isExpanded = false,
   disabled = false,
   setExpanded,
+  user = ``,
+  error,
 }) {
   return (
     <Formik
       initialValues={{
         title: ``,
-        userName: ``,
+        userName: user,
         content: ``,
       }}
       validationSchema={postSchema}
@@ -102,6 +104,7 @@ export default function AddPostForm({
               autoFocus
               fullWidth
               required
+              disabled
             />
             <FormHelperText id="userName-error">
               {touched.userName && errors.userName}
@@ -151,6 +154,9 @@ export default function AddPostForm({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
+                <FormHelperText id="submit-error">
+                  {error && error.message}
+                </FormHelperText>
                 <Buttons
                   isSubmitting={isSubmitting}
                   handleReset={handleReset}

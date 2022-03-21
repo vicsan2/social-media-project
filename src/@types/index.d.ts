@@ -28,3 +28,7 @@ interface Provider {
   showComments: boolean = false
   handleCommentClick: (e: any) => void
 }
+
+interface UserData {
+  user: string
+}

@@ -49,15 +49,9 @@ export function Likes({ id }) {
           },
         }
       )
-      // const xhr = new XMLHttpRequest()
-      // xhr.open(`POST`, `${apiUrl}/likes/${id}`)
-      // xhr.setRequestHeader(`content-type`, `application/json`)
-      // // Send selected like JSON stringified to cloudflare worker
-      // return xhr.send(JSON.stringify([newLikeSelected, newSelected]))
     },
     {
       onMutate: async (newLikeSelected: LikeSelected) => {
-        await queryClient.cancelQueries(`getLikes/${id}`)
         const previousLikes: AllLikes = queryClient.getQueryData(
           `getLikes/${id}`
         )
@@ -84,12 +78,13 @@ export function Likes({ id }) {
         })
         return { previousLikes }
       },
+      /**
       onSuccess: () => {
         setTimeout(() => {
           queryClient.invalidateQueries(`getLikes/${id}`)
           queryClient.invalidateQueries(`getPosts`)
         }, 500)
-      },
+      }, */
     }
   )
 

@@ -5,23 +5,18 @@ import axios, { AxiosError } from "axios"
 
 import { apiUrl } from "../constants"
 import Typography from "../atoms/Typography"
-import AddPostForm from "../molecules/AddPostForm"
 import PostWrapper from "../molecules/PostWrapper"
+import AddUserForm from "../molecules/AddUserForm"
 
-function QueryMutation(): UseMutationResult<PostData, AxiosError, PostData> {
+function QueryMutation(): UseMutationResult<UserData, AxiosError, UserData> {
   const queryClient = useQueryClient()
-  return useMutation<PostData, AxiosError, PostData>(
-    async (newPost: PostData) =>
-      axios.post(`${apiUrl}/posts`, JSON.stringify(newPost), {
+  return useMutation<UserData, AxiosError, UserData>(
+    async (newUser: UserData) =>
+      axios.post(`${apiUrl}/users`, JSON.stringify(newUser.user), {
         headers: {
           "Content-Type": `application/json`,
         },
       }),
-    // post(`${apiUrl}/users`, JSON.stringify(newPost.userName), {
-    //   headers: {
-    //     "Content-Type": `application/json`,
-    //   },
-    // })
     {
       // onMutate: async (newPost: PostData) => {
       //   await queryClient.cancelQueries(`getPosts`)
@@ -48,36 +43,26 @@ function QueryMutation(): UseMutationResult<PostData, AxiosError, PostData> {
 
 // Requst adding of new post to the kv namespace.
 // If successful, display post to user before refreshing all posts
-export default function AddPost({
-  disabled = false,
-  expanded = false,
-  user = ``,
-}) {
+export default function AddUser() {
   const postMutation = QueryMutation()
 
   const { error } = postMutation
 
-  const [isExpanded, setExpanded] = React.useState(expanded)
-
   return (
     <motion.div layout>
-      <PostWrapper onClick={() => setExpanded(true)}>
+      <PostWrapper>
         <Typography variant="h3" sx={{ textAlign: `center` }}>
-          Create Post
+          Choose A Temporary Username
         </Typography>
-        <AddPostForm
-          onSubmit={(values: PostData) => {
-            const parsedUserName = values.userName.trim()
+        <AddUserForm
+          onSubmit={(values: UserData) => {
+            const parsedUserName = values.user.trim()
             // When submited, attempt to send new post
             return postMutation.mutateAsync({
               ...values,
-              userName: !parsedUserName.length ? `Anonymous` : parsedUserName,
+              user: !parsedUserName.length ? `Anonymous` : parsedUserName,
             })
           }}
-          disabled={disabled}
-          isExpanded={isExpanded}
-          setExpanded={setExpanded}
-          user={user}
           error={error}
         />
       </PostWrapper>

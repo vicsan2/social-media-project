@@ -19,3 +19,7 @@ export const commentSchema = Yup.object().shape({
     .max(250, `Too Long!`)
     .required(`Required`),
 })
+
+export const userSchema = Yup.object().shape({
+  user: Yup.string().max(15, `Too Long!`),
+})
